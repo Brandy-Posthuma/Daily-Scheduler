@@ -19,7 +19,7 @@ Here is a screenshot of the requirements of the project as well as the final web
 b0f1849.png">
 <img width="771" alt="Screen Shot 2022-12-12 at 2 58 38 PM" src="https://user-images.githubusercontent.com/106634926/207164553-48f99672-2c59-49c2-b2fd-642f2e222853.png">
 <img width="747" alt="Screen Shot 2022-12-12 at 2 59 05 PM" src="https://user-images.githubusercontent.com/106634926/207164577-b59a77be-5120-4b67-842e-2d47b9e5c493.png">
-
+<img width="935" alt="Screen Shot 2022-12-12 at 3 12 49 PM" src="https://user-images.githubusercontent.com/106634926/207166662-7569bfdd-2d73-4198-acb3-e67c1eb9404a.png">
 
 
 Credit
