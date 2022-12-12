@@ -1,23 +1,81 @@
-// Wrap all code that interacts with the DOM in a call to jQuery to ensure that
-// the code isn't run until the browser has finished rendering all the elements
-// in the html.
-$(function () {
-  // TODO: Add a listener for click events on the save button. This code should
-  // use the id in the containing time-block as a key to save the user input in
-  // local storage. HINT: What does `this` reference in the click listener
-  // function? How can DOM traversal be used to get the "hour-x" id of the
-  // time-block containing the button that was clicked? How might the id be
-  // useful when saving the description in local storage?
-  //
-  // TODO: Add code to apply the past, present, or future class to each time
-  // block by comparing the id to the current hour. HINTS: How can the id
-  // attribute of each time-block be used to conditionally add or remove the
-  // past, present, and future classes? How can Day.js be used to get the
-  // current hour in 24-hour time?
-  //
-  // TODO: Add code to get any user input that was saved in localStorage and set
-  // the values of the corresponding textarea elements. HINT: How can the id
-  // attribute of each time-block be used to do this?
-  //
-  // TODO: Add code to display the current date in the header of the page.
-});
+var timeElement = document.querySelector(".time");
+var dateElement = document.querySelector(".date");
+var saveButton = $(".saveBtn");
+
+/**
+ * @param {Date} date 
+ */
+function formatTime(date) {
+    var hours12 = date.getHours() % 12 || 12;
+    var minutes = date.getMinutes();
+    var isAm = date.getHours() < 12;
+
+    return `${hours12.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")} ${isAm ? "AM" : "PM"} `;
+}
+
+/**
+ * @param {Date} date 
+ */
+function formatDate(date) {
+    var DAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    var MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+
+    return `${DAYS[date.getDay()]}, ${MONTHS[date.getMonth()]} ${date.getDate()} ${date.getFullYear()} `;
+}
+
+setInterval(() => {
+    var now = new Date();
+
+    timeElement.textContent = formatTime(now);
+    dateElement.textContent = formatDate(now);
+}, 300);
+
+$(document).ready(function () {
+    $(".savebtn").on("click", function () {
+        var input = $(this).siblings(".description").val();
+        var time = $(this).parent().attr("id");
+
+        //Save in local storage
+        localStorage.setItem(time, input);
+    })
+
+    function scheduler() {
+        var currentTime = moment().hour();
+
+        $(".time-block").each(function () {
+            var blockTime = parseInt($(this).attr("id").split("hour")[1]);
+
+            if (currentTime > blockTime) {
+                $(this).removeClass("future");
+                $(this).removeClass("present");
+                $(this).addClass("past");
+            }
+            else if (currentTime === blockTime) {
+                $(this).removeClass("past");
+                $(this).removeClass("future");
+                $(this).addClass("present");
+            }
+            else {
+                $(this).removeClass("present");
+                $(this).removeClass("past");
+                $(this).addClass("future");
+            }
+        })
+    }
+    $("#hour9 .description").val(localStorage.getItem("9am"));
+    $("#hour10 .description").val(localStorage.getItem("10am"));
+    $("#hour11 .description").val(localStorage.getItem("11am"));
+    $("#hour12 .description").val(localStorage.getItem("12pm"));
+    $("#hour13 .description").val(localStorage.getItem("1pm"));
+    $("#hour14 .description").val(localStorage.getItem("2pm"));
+    $("#hour15 .description").val(localStorage.getItem("3pm"));
+    $("#hour16 .description").val(localStorage.getItem("4pm"));
+    $("#hour17 .description").val(localStorage.getItem("5pm"));
+
+    scheduler();
+})  
+
+
+
+       
+    
